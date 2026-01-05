@@ -1,26 +1,21 @@
 """Configuration for the LLM Council."""
 
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
-
-# Mistral API key
-MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
-
-# Council members - list of Mistral model identifiers
+# Council members with mapping to their endpoint
 COUNCIL_MODELS = [
-    "mistral-tiny",
-    "mistral-small", 
-    "mistral-medium",
-    "mistral-large-2512",
+    "http://172.20.10.2:8002/api/query",
+    "http://localhost:8003/api/query",
 ]
 
-# Chairman model - synthesizes final response
-CHAIRMAN_MODEL = "mistral-large-2512"
+COUNCIL_MODEL_NAMES = {
+    "http://172.20.10.2:8002/api/query": "llama3.2:1b",
+    "http://localhost:8003/api/query": "gemma3:1b",
+}
 
-# Mistral API endpoint
-MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
+# Chairman model - synthesizes final response
+CHAIRMAN_ENDPOINT = "http://localhost:8004/api/query"
+
+CHAIRMAN_MODEL_NAME = "gemma3:1b"
 
 # Data directory for conversation storage
 DATA_DIR = "data/conversations"

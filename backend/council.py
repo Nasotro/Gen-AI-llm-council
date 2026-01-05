@@ -1,8 +1,8 @@
 """3-stage LLM Council orchestration."""
 
 from typing import List, Dict, Any, Tuple
-from .mistral import query_models_parallel, query_model
-from .config import COUNCIL_MODELS, CHAIRMAN_MODEL
+from .client import query_models_parallel, query_model
+from .config import COUNCIL_MODELS, CHAIRMAN_ENDPOINT, COUNCIL_MODEL_NAMES, CHAIRMAN_MODEL_NAME
 
 
 async def stage1_collect_responses(user_query: str) -> List[Dict[str, Any]]:
@@ -22,10 +22,10 @@ async def stage1_collect_responses(user_query: str) -> List[Dict[str, Any]]:
 
     # Format results
     stage1_results = []
-    for model, response in responses.items():
+    for url, response in responses.items():
         if response is not None:  # Only include successful responses
             stage1_results.append({
-                "model": model,
+                "model": COUNCIL_MODEL_NAMES.get(url, url),
                 "response": response.get('content', '')
             })
 
@@ -51,15 +51,19 @@ async def stage2_collect_rankings(
 
     # Create mapping from label to model name
     label_to_model = {
-        f"Response {label}": result['model']
+        f"Response {label}": COUNCIL_MODEL_NAMES.get(result['model'], result['model'])
         for label, result in zip(labels, stage1_results)
     }
+
+    print("labels to models: ", label_to_model)
 
     # Build the ranking prompt
     responses_text = "\n\n".join([
         f"Response {label}:\n{result['response']}"
         for label, result in zip(labels, stage1_results)
     ])
+
+    print("response text, ranking prompt: ", responses_text)
 
     ranking_prompt = f"""You are evaluating different responses to the following question:
 
@@ -91,23 +95,28 @@ FINAL RANKING:
 3. Response B
 
 Now provide your evaluation and ranking:"""
+    
 
     messages = [{"role": "user", "content": ranking_prompt}]
+
+    print("messages: ", messages)
 
     # Get rankings from all council models in parallel
     responses = await query_models_parallel(COUNCIL_MODELS, messages)
 
     # Format results
     stage2_results = []
-    for model, response in responses.items():
+    for url, response in responses.items():
         if response is not None:
             full_text = response.get('content', '')
             parsed = parse_ranking_from_text(full_text)
             stage2_results.append({
-                "model": model,
+                "model": COUNCIL_MODEL_NAMES.get(url, url),
                 "ranking": full_text,
                 "parsed_ranking": parsed
             })
+
+    print("stage 2 results: ", stage2_results)
 
     return stage2_results, label_to_model
 
@@ -159,17 +168,17 @@ Provide a clear, well-reasoned final answer that represents the council's collec
     messages = [{"role": "user", "content": chairman_prompt}]
 
     # Query the chairman model
-    response = await query_model(CHAIRMAN_MODEL, messages)
+    response = await query_model(CHAIRMAN_ENDPOINT, messages)
 
     if response is None:
         # Fallback if chairman fails
         return {
-            "model": CHAIRMAN_MODEL,
+            "model": CHAIRMAN_MODEL_NAME,
             "response": "Error: Unable to generate final synthesis."
         }
 
     return {
-        "model": CHAIRMAN_MODEL,
+        "model": CHAIRMAN_MODEL_NAME,
         "response": response.get('content', '')
     }
 
@@ -274,8 +283,8 @@ Title:"""
 
     messages = [{"role": "user", "content": title_prompt}]
 
-    # Use mistral-tiny for title generation (fast and cheap)
-    response = await query_model("mistral-tiny", messages, timeout=30.0)
+    # Use llama3.2:1b for title generation (fast and cheap)
+    response = await query_model(COUNCIL_MODELS[0], messages, timeout=30.0)
 
     if response is None:
         # Fallback to a generic title
