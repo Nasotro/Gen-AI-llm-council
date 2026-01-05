@@ -2,9 +2,12 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 import uvicorn
+from .config import CHAIRMAN_MODEL_NAME
+
+print(CHAIRMAN_MODEL_NAME)
 
 app = FastAPI()
-llm = ChatOllama(model="gemma3:1b")
+llm = ChatOllama(model=CHAIRMAN_MODEL_NAME)
 
 class QueryRequest(BaseModel):
     messages: list
@@ -13,7 +16,7 @@ class QueryRequest(BaseModel):
 def health_check():
     return {
         "status": "ok",
-        "model": "gemma3:1b",
+        "model": CHAIRMAN_MODEL_NAME,
         "type": "Chairman"
     }
 

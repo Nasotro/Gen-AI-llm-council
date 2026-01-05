@@ -87,15 +87,15 @@ Example of the correct format for your ENTIRE response:
 
 Response A provides good detail on X but misses Y...
 Response B is accurate but lacks depth on Z...
+Response C offers the most comprehensive answer...
 
 FINAL RANKING:
-1. Response B
+1. Response C
 2. Response A
+3. Response B
 
 Now provide your evaluation and ranking:"""
     
-    # Response C offers the most comprehensive answer...
-    # 3. Response C
 
     messages = [{"role": "user", "content": ranking_prompt}]
 
