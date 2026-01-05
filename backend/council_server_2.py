@@ -4,7 +4,7 @@ from langchain_ollama import ChatOllama
 import uvicorn
 from .config import COUNCIL_MODEL_NAMES
 
-model_name = COUNCIL_MODEL_NAMES.get("http://localhost:8003/api/query")
+model_name = COUNCIL_MODEL_NAMES.get("http://172.20.10.3:8003/api/query")
 print(model_name)
 
 app = FastAPI()
