@@ -7,6 +7,53 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Light mode colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #fafafa;
+  --bg-input: #ffffff;
+  --bg-user-msg: #f0f7ff;
+  --bg-stage-loading: #f9fafb;
+  --bg-stage-3: #f0fff0;
+  --bg-code: #f5f5f5;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --border-color: #e0e0e0;
+  --border-light: #d0d0d0;
+  --border-user-msg: #d0e7ff;
+  --border-stage-3: #c8e6c8;
+  --border-blockquote: #dddddd;
+  --color-primary: #4a90e2;
+  --color-primary-hover: #357abd;
+  --color-text-blue: #2a7ae2;
+  --color-text-green: #2d8a2d;
+  --sidebar-bg: #f8f8f8;
+}
+
+:root[data-theme="dark"] {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #333333;
+  --bg-input: #2d2d2d;
+  --bg-user-msg: #0d47a1;
+  --bg-stage-loading: #2d2d2d;
+  --bg-stage-3: #1a3a1a;
+  --bg-code: #2d2d2d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --border-color: #404040;
+  --border-light: #505050;
+  --border-user-msg: #1565c0;
+  --border-stage-3: #2e7d32;
+  --border-blockquote: #505050;
+  --color-primary: #6ba3f5;
+  --color-primary-hover: #85b8ff;
+  --color-text-blue: #64b5f6;
+  --color-text-green: #81c784;
+  --sidebar-bg: #252525;
 }
 
 * {
@@ -19,7 +66,8 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 #root {
@@ -69,20 +117,21 @@ body {
   margin: 4px 0;
 }
 
-.markdown-content pre {
-  background: #f5f5f5;
+.markdown-contvar(--bg-code);
   padding: 12px;
   border-radius: 4px;
   overflow-x: auto;
   margin: 0 0 12px 0;
+  color: var(--text-primary);
 }
 
 .markdown-content code {
-  background: #f5f5f5;
+  background: var(--bg-code);
   padding: 2px 6px;
   border-radius: 3px;
   font-family: monospace;
   font-size: 0.9em;
+  color: var(--text-primary);
 }
 
 .markdown-content pre code {
@@ -93,6 +142,7 @@ body {
 .markdown-content blockquote {
   margin: 0 0 12px 0;
   padding-left: 16px;
-  border-left: 4px solid #ddd;
+  border-left: 4px solid var(--border-blockquote);
+  color: var(--text-secondary): 4px solid #ddd;
   color: #666;
 }
