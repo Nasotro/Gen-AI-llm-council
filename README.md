@@ -1,93 +1,82 @@
-# LLM Council
+# LLM Council - Local Deployement
 
-![llmcouncil](header.jpg)
+### Team
+- **Group Members**:
+    - Aymeric MARTIN
+    - Noémie MAZEPA
+    - Lorrain MORLET
+- **TD Group**: CDOF3
 
-The idea of this repo is that instead of asking a question to your favorite LLM provider, you can group multiple Mistral AI models into your "LLM Council". This repo is a simple, local web app that essentially looks like ChatGPT except it uses the Mistral API to send your query to multiple Mistral models, it then asks them to review and rank each other's work, and finally a Chairman LLM produces the final response.
+--- 
 
-In a bit more detail, here is what happens when you submit a query:
+### Project Overview
 
-1. **Stage 1: First opinions**. The user query is given to all LLMs individually, and the responses are collected. The individual responses are shown in a "tab view", so that the user can inspect them all one by one.
-2. **Stage 2: Review**. Each individual LLM is given the responses of the other LLMs. Under the hood, the LLM identities are anonymized so that the LLM can't play favorites when judging their outputs. The LLM is asked to rank them in accuracy and insight.
-3. **Stage 3: Final response**. The designated Chairman of the LLM Council takes all of the model's responses and compiles them into a single final answer that is presented to the user.
 
-## Vibe Code Alert
-
-This project was 99% vibe coded as a fun Saturday hack because I wanted to explore and evaluate a number of LLMs side by side in the process of [reading books together with LLMs](https://x.com/karpathy/status/1990577951671509438). It's nice and useful to see multiple responses side by side, and also the cross-opinions of all LLMs on each other's outputs. I'm not going to support it in any way, it's provided here as is for other people's inspiration and I don't intend to improve it. Code is ephemeral now and libraries are over, ask your LLM to change it in whatever way you like.
-
-## Setup
-
-### 1. Install Dependencies
-
-The project uses [uv](https://docs.astral.sh/uv/) for project management.
-
-**Backend:**
-```bash
-uv sync
+### System Architecture
 ```
 
-**Frontend:**
-```bash
-cd frontend
-npm install
-cd ..
 ```
 
-### 2. Configure API Key
+### LLM Models Used
+- Council Member 1: Qwen2.5 (1.5B)
+- Council Member 2: Ministral-3 (3B)
+- Chairman: Ministral-3 (3B)
 
-Create a `.env` file in the project root:
+### Setup and Installation
+#### Prerequisites
 
-```bash
-MISTRAL_API_KEY=your_api_key_here
-```
+### Ollama Setup
+On each machine, install Ollama and pull the required models:
+````
+ollama pull qwen2.5:1.5b
+ollama pull ministral:3b
+````
+--- 
+### Running the Project
 
-Get your API key at [Mistral AI Console](https://console.mistral.ai/). Make sure to purchase the credits you need, or sign up for automatic top up.
-
-### 3. Configure Models (Optional)
-
-Edit `backend/config.py` to customize the council:
-
-```python
-COUNCIL_MODELS = [
-    "mistral-tiny",
-    "mistral-small",
-    "mistral-medium", 
-    "mistral-large",
-]
-
-CHAIRMAN_MODEL = "mistral-large"
-```
-
-Available Mistral models include:
-- `mistral-tiny`: Fast and inexpensive
-- `mistral-small`: Balanced performance
-- `mistral-medium`: Higher quality responses
-- `mistral-large`: Highest quality, best for complex tasks
-
-## Running the Application
-
-**Option 1: Use the start script**
-```bash
-./start.sh
-```
-
-**Option 2: Run manually**
+#### Start the LLM Servers
+1. Chairman Machine
 
 Terminal 1 (Backend):
 ```bash
 uv run python -m backend.main
 ```
 
-Terminal 2 (Frontend):
+Terminal 2 (Chairman Server):
+```bash
+uv run python -m backend.chairman_server
+```
+
+Terminal 3 (Frontend):
 ```bash
 cd frontend
 npm run dev
 ```
-
 Then open http://localhost:5173 in your browser.
 
-## Tech Stack
+2. Council Member 1 Machine
+Terminal 1 (Council Member 1 Server):
+```bash
+uv run python -m backend.council_server_1
+```
+3. Council Member 2 Machine
+Terminal 1 (Council Member 2 Server):
+```bash
+uv run python -m backend.council_server_2
+```
 
-- **Backend:** FastAPI (Python 3.10+), async httpx, Mistral API
+
+---
+## Technologies Used
+
+- **Backend:** FastAPI (Python 3.10+), async httpx, Ollama
 - **Frontend:** React + Vite, react-markdown for rendering
 - **Storage:** JSON files in `data/conversations/`
 - **Package Management:** uv for Python, npm for JavaScript
+
+---
+### Improvements Over the Original Project
+
+
+---
+### Generative AI Usage Statement
