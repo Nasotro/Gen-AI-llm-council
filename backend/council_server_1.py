@@ -2,9 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 import uvicorn
-from .config import COUNCIL_MODEL_NAMES
 
-model_name = COUNCIL_MODEL_NAMES.get("http://172.20.10.2:8002/api/query")
+model_name = "gemma3:1b"
 print(model_name)
 
 

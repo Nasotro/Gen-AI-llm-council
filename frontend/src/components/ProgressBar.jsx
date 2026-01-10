@@ -1,11 +1,17 @@
 import './ProgressBar.css';
 
-export default function ProgressBar({ currentStage, loading }) {
+export default function ProgressBar({ currentStage, loading, timings }) {
   const stages = [
     { id: 1, name: 'Individual Responses', key: 'stage1' },
     { id: 2, name: 'Peer Rankings', key: 'stage2' },
     { id: 3, name: 'Final Answer', key: 'stage3' },
   ];
+
+  const formatTime = (seconds) => {
+    if (!seconds) return null;
+    if (seconds < 1) return `${Math.round(seconds * 1000)}ms`;
+    return `${seconds.toFixed(2)}s`;
+  };
 
   // Determine the current stage index based on what's completed or loading
   const getCurrentStageIndex = () => {
@@ -36,10 +42,13 @@ export default function ProgressBar({ currentStage, loading }) {
           const isCompleted = status === 'completed';
           const isLast = index === stages.length - 1;
 
+          const stageTimings = timings?.[stage.key];
+          const hasTiming = stageTimings && typeof stageTimings === 'number';
+
           return (
             <div key={stage.id} className="progress-stage-wrapper">
               <div className={`progress-stage ${status}`}>
-                <div className={`stage-circle ${status}`}>
+                <div className={`stage-circle ${status} ${hasTiming ? 'has-timing' : ''}`}>
                   {isCompleted ? (
                     <svg className="checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12"></polyline>
@@ -50,6 +59,14 @@ export default function ProgressBar({ currentStage, loading }) {
                     <span className="stage-number">{stage.id}</span>
                   )}
                 </div>
+                {hasTiming && (
+                  <div className="stage-tooltip">
+                    <div className="tooltip-content">
+                      <div className="tooltip-header">Processing Time</div>
+                      <div className="tooltip-time">{formatTime(stageTimings)}</div>
+                    </div>
+                  </div>
+                )}
                 <div className="stage-label">{stage.name}</div>
               </div>
               {!isLast && (

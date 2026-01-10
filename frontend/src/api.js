@@ -112,4 +112,15 @@ export const api = {
       }
     }
   },
+
+  /**
+   * Get aggregate statistics about model performance.
+   */
+  async getStatistics() {
+    const response = await fetch(`${API_BASE}/api/statistics`);
+    if (!response.ok) {
+      throw new Error('Failed to get statistics');
+    }
+    return response.json();
+  },
 };

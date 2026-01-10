@@ -82,6 +82,7 @@ export default function ChatInterface({
                       stage3: msg.stage3 
                     }} 
                     loading={msg.loading}
+                    timings={msg.timing}
                   />
 
                   {/* Stage 1 */}

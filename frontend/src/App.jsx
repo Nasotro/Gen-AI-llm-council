@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatInterface from './components/ChatInterface';
+import Statistics from './components/Statistics';
 import { api } from './api';
 import './App.css';
 
@@ -10,6 +11,7 @@ function App() {
   const [currentConversation, setCurrentConversation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  const [currentView, setCurrentView] = useState('chat'); // 'chat' or 'statistics'
 
   // Set theme on mount and when theme changes
   useEffect(() => {
@@ -62,6 +64,7 @@ function App() {
 
   const handleSelectConversation = (id) => {
     setCurrentConversationId(id);
+    setCurrentView('chat'); // Switch to chat view when selecting a conversation
   };
 
   const handleSendMessage = async (content) => {
@@ -201,12 +204,18 @@ function App() {
         onNewConversation={handleNewConversation}
         theme={theme}
         onThemeToggle={toggleTheme}
+        currentView={currentView}
+        onViewChange={setCurrentView}
       />
-      <ChatInterface
-        conversation={currentConversation}
-        onSendMessage={handleSendMessage}
-        isLoading={isLoading}
-      />
+      {currentView === 'chat' ? (
+        <ChatInterface
+          conversation={currentConversation}
+          onSendMessage={handleSendMessage}
+          isLoading={isLoading}
+        />
+      ) : (
+        <Statistics />
+      )}
     </div>
   );
 }

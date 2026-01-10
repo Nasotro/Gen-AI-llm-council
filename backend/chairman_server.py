@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 import uvicorn
-from .config import CHAIRMAN_MODEL_NAME
+from config import CHAIRMAN_MODEL_NAME
 
 print(CHAIRMAN_MODEL_NAME)
 

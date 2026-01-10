@@ -57,6 +57,51 @@
   border-color: var(--color-primary-hover);
 }
 
+.view-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.view-tab {
+  flex: 1;
+  padding: 0.625rem 0.75rem;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.view-tab svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+.view-tab:hover {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+  color: var(--text-primary);
+}
+
+.view-tab.active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.view-tab.active svg {
+  stroke: white;
+}
+
 .conversation-list {
   flex: 1;
   overflow-y: auto;

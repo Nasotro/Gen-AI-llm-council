@@ -1,4 +1,4 @@
-"""FastAPI backend for LLM Council."""
+"""FastAPI backend for LLM Council - Local only version."""
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,9 +10,16 @@ import json
 import asyncio
 
 import storage
-from council import run_full_council, generate_conversation_title, stage1_collect_responses, stage2_collect_rankings, stage3_synthesize_final, calculate_aggregate_rankings
+from council_local import (
+    run_full_council_local,
+    generate_conversation_title_local,
+    stage1_collect_responses_local,
+    stage2_collect_rankings_local,
+    stage3_synthesize_final_local,
+    calculate_aggregate_rankings
+)
 
-app = FastAPI(title="LLM Council API")
+app = FastAPI(title="LLM Council API (Local)")
 
 # Enable CORS for local development
 app.add_middleware(
@@ -53,7 +60,7 @@ class Conversation(BaseModel):
 @app.get("/")
 async def root():
     """Health check endpoint."""
-    return {"status": "ok", "service": "LLM Council API"}
+    return {"status": "ok", "service": "LLM Council API (Local)", "mode": "local"}
 
 
 @app.get("/api/conversations", response_model=List[ConversationMetadata])
@@ -79,97 +86,10 @@ async def get_conversation(conversation_id: str):
     return conversation
 
 
-@app.get("/api/statistics")
-async def get_statistics():
-    """
-    Get aggregate statistics about model performance across all conversations.
-    Returns timing and usage statistics for each model.
-    """
-    all_conversations = storage.list_conversations()
-    
-    # Initialize statistics
-    stats = {
-        "total_messages": 0,
-        "total_conversations": len(all_conversations),
-        "model_stats": {},
-        "stage_timings": {
-            "stage1": [],
-            "stage2": [],
-            "stage3": [],
-            "total": []
-        }
-    }
-    
-    # Process each conversation
-    for conv_metadata in all_conversations:
-        conversation = storage.get_conversation(conv_metadata["id"])
-        if not conversation:
-            continue
-            
-        for message in conversation.get("messages", []):
-            if message.get("role") == "assistant":
-                stats["total_messages"] += 1
-                
-                # Process timing data if available
-                timing = message.get("timing")
-                if timing:
-                    for stage in ["stage1", "stage2", "stage3", "total"]:
-                        if stage in timing:
-                            stats["stage_timings"][stage].append(timing[stage])
-                
-                # Process stage1 (individual model responses)
-                stage1 = message.get("stage1", [])
-                for response in stage1:
-                    model_name = response.get("model")
-                    if model_name:
-                        if model_name not in stats["model_stats"]:
-                            stats["model_stats"][model_name] = {
-                                "name": model_name,
-                                "response_count": 0,
-                                "total_response_length": 0
-                            }
-                        stats["model_stats"][model_name]["response_count"] += 1
-                        stats["model_stats"][model_name]["total_response_length"] += len(response.get("response", ""))
-    
-    # Calculate averages
-    for model_name, model_data in stats["model_stats"].items():
-        if model_data["response_count"] > 0:
-            model_data["avg_response_length"] = round(
-                model_data["total_response_length"] / model_data["response_count"], 
-                2
-            )
-    
-    # Calculate timing averages
-    timing_stats = {}
-    for stage, times in stats["stage_timings"].items():
-        if times:
-            timing_stats[stage] = {
-                "avg": round(sum(times) / len(times), 2),
-                "min": round(min(times), 2),
-                "max": round(max(times), 2),
-                "count": len(times)
-            }
-        else:
-            timing_stats[stage] = {
-                "avg": 0,
-                "min": 0,
-                "max": 0,
-                "count": 0
-            }
-    
-    stats["timing_stats"] = timing_stats
-    del stats["stage_timings"]  # Remove raw timing arrays
-    
-    # Convert model_stats dict to list
-    stats["model_stats"] = list(stats["model_stats"].values())
-    
-    return stats
-
-
 @app.post("/api/conversations/{conversation_id}/message")
 async def send_message(conversation_id: str, request: SendMessageRequest):
     """
-    Send a message and run the 3-stage council process.
+    Send a message and run the 3-stage council process locally.
     Returns the complete response with all stages.
     """
     # Check if conversation exists
@@ -185,11 +105,11 @@ async def send_message(conversation_id: str, request: SendMessageRequest):
 
     # If this is the first message, generate a title
     if is_first_message:
-        title = await generate_conversation_title(request.content)
+        title = await generate_conversation_title_local(request.content)
         storage.update_conversation_title(conversation_id, title)
 
-    # Run the 3-stage council process
-    stage1_results, stage2_results, stage3_result, metadata = await run_full_council(
+    # Run the 3-stage council process locally
+    stage1_results, stage2_results, stage3_result, metadata = await run_full_council_local(
         request.content
     )
 
@@ -213,7 +133,7 @@ async def send_message(conversation_id: str, request: SendMessageRequest):
 @app.post("/api/conversations/{conversation_id}/message/stream")
 async def send_message_stream(conversation_id: str, request: SendMessageRequest):
     """
-    Send a message and stream the 3-stage council process.
+    Send a message and stream the 3-stage council process locally.
     Returns Server-Sent Events as each stage completes.
     """
     # Check if conversation exists
@@ -232,31 +152,22 @@ async def send_message_stream(conversation_id: str, request: SendMessageRequest)
             # Start title generation in parallel (don't await yet)
             title_task = None
             if is_first_message:
-                title_task = asyncio.create_task(generate_conversation_title(request.content))
+                title_task = asyncio.create_task(generate_conversation_title_local(request.content))
 
-            # Stage 1: Collect responses
+            # Stage 1: Collect responses from local models
             yield f"data: {json.dumps({'type': 'stage1_start'})}\n\n"
-            stage1_results, stage1_time = await stage1_collect_responses(request.content)
+            stage1_results = await stage1_collect_responses_local(request.content)
             yield f"data: {json.dumps({'type': 'stage1_complete', 'data': stage1_results})}\n\n"
 
-            # Stage 2: Collect rankings
+            # Stage 2: Collect rankings from local models
             yield f"data: {json.dumps({'type': 'stage2_start'})}\n\n"
-            stage2_results, label_to_model, stage2_time = await stage2_collect_rankings(request.content, stage1_results)
+            stage2_results, label_to_model = await stage2_collect_rankings_local(request.content, stage1_results)
             aggregate_rankings = calculate_aggregate_rankings(stage2_results, label_to_model)
             yield f"data: {json.dumps({'type': 'stage2_complete', 'data': stage2_results, 'metadata': {'label_to_model': label_to_model, 'aggregate_rankings': aggregate_rankings}})}\n\n"
 
-            # Stage 3: Synthesize final answer
+            # Stage 3: Synthesize final answer locally
             yield f"data: {json.dumps({'type': 'stage3_start'})}\n\n"
-            stage3_result, stage3_time = await stage3_synthesize_final(request.content, stage1_results, stage2_results)
-            
-            # Prepare timing metadata
-            timing_metadata = {
-                "stage1": round(stage1_time, 2),
-                "stage2": round(stage2_time, 2),
-                "stage3": round(stage3_time, 2),
-                "total": round(stage1_time + stage2_time + stage3_time, 2)
-            }
-            
+            stage3_result = await stage3_synthesize_final_local(request.content, stage1_results, stage2_results)
             yield f"data: {json.dumps({'type': 'stage3_complete', 'data': stage3_result})}\n\n"
 
             # Wait for title generation if it was started
@@ -270,8 +181,7 @@ async def send_message_stream(conversation_id: str, request: SendMessageRequest)
                 conversation_id,
                 stage1_results,
                 stage2_results,
-                stage3_result,
-                timing_metadata
+                stage3_result
             )
 
             # Send completion event
@@ -293,4 +203,4 @@ async def send_message_stream(conversation_id: str, request: SendMessageRequest)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8005)
