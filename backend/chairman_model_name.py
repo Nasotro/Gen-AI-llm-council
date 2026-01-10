@@ -1,0 +1,1 @@
+CHAIRMAN_MODEL_NAME = "ministral-3:3b"

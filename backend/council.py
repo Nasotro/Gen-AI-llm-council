@@ -3,7 +3,8 @@
 import time
 from typing import List, Dict, Any, Tuple
 from client import query_models_parallel, query_model
-from config import COUNCIL_MODELS, CHAIRMAN_ENDPOINT, COUNCIL_MODEL_NAMES, CHAIRMAN_MODEL_NAME
+from config import COUNCIL_MODELS, CHAIRMAN_ENDPOINT, COUNCIL_MODEL_NAMES
+from chairman_model_name import CHAIRMAN_MODEL_NAME
 
 
 async def stage1_collect_responses(user_query: str) -> Tuple[List[Dict[str, Any]], float]:
