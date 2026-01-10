@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 import uvicorn
+import socket
 from .config import COUNCIL_MODEL_NAMES
 
 model_name = COUNCIL_MODEL_NAMES.get("http://172.20.10.2:8002/api/query")
@@ -39,4 +40,6 @@ def query(request: QueryRequest):
         return None
 
 if __name__ == "__main__":
+    print(socket.gethostbyname(socket.gethostname()))
     uvicorn.run(app, host="0.0.0.0", port=8002)
+

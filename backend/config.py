@@ -4,12 +4,12 @@
 # Council members with mapping to their endpoint
 COUNCIL_MODELS = [
     "http://172.20.10.2:8002/api/query",
-    "http://localhost:8003/api/query",
+    "http://localhost:8002/api/query",
 ]
 
 COUNCIL_MODEL_NAMES = {
-    "http://172.20.10.2:8002/api/query": "llama3.2:1b",
-    "http://localhost:8003/api/query": "gemma3:1b",
+    "http://172.20.10.2:8002/api/query": "qwen2.5:1.5b",
+    "http://localhost:8002/api/query": "gemma3:1b",
 }
 
 # Chairman model - synthesizes final response
