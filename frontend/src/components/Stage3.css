@@ -3,11 +3,73 @@
   border-color: var(--border-stage-3);
 }
 
+/* Model-specific Stage3 colors */
+.stage3.model-color-0 {
+  background: var(--model-0-bg);
+  border-color: var(--model-0-border);
+}
+
+.stage3.model-color-1 {
+  background: var(--model-1-bg);
+  border-color: var(--model-1-border);
+}
+
+.stage3.model-color-2 {
+  background: var(--model-2-bg);
+  border-color: var(--model-2-border);
+}
+
+.stage3.model-color-3 {
+  background: var(--model-3-bg);
+  border-color: var(--model-3-border);
+}
+
+.stage3.model-color-4 {
+  background: var(--model-4-bg);
+  border-color: var(--model-4-border);
+}
+
+.stage3.model-color-5 {
+  background: var(--model-5-bg);
+  border-color: var(--model-5-border);
+}
+
 .final-response {
   background: var(--bg-input);
   padding: 20px;
   border-radius: 6px;
   border: 1px solid var(--border-stage-3);
+}
+
+/* Model-specific final response colors */
+.final-response.model-color-0 {
+  background: var(--model-0-bg);
+  border-color: var(--model-0-border);
+}
+
+.final-response.model-color-1 {
+  background: var(--model-1-bg);
+  border-color: var(--model-1-border);
+}
+
+.final-response.model-color-2 {
+  background: var(--model-2-bg);
+  border-color: var(--model-2-border);
+}
+
+.final-response.model-color-3 {
+  background: var(--model-3-bg);
+  border-color: var(--model-3-border);
+}
+
+.final-response.model-color-4 {
+  background: var(--model-4-bg);
+  border-color: var(--model-4-border);
+}
+
+.final-response.model-color-5 {
+  background: var(--model-5-bg);
+  border-color: var(--model-5-border);
 }
 
 .chairman-label {
@@ -16,6 +78,31 @@
   font-family: monospace;
   margin-bottom: 12px;
   font-weight: 600;
+}
+
+/* Model-specific chairman label colors */
+.final-response.model-color-0 .chairman-label {
+  color: var(--model-0-text);
+}
+
+.final-response.model-color-1 .chairman-label {
+  color: var(--model-1-text);
+}
+
+.final-response.model-color-2 .chairman-label {
+  color: var(--model-2-text);
+}
+
+.final-response.model-color-3 .chairman-label {
+  color: var(--model-3-text);
+}
+
+.final-response.model-color-4 .chairman-label {
+  color: var(--model-4-text);
+}
+
+.final-response.model-color-5 .chairman-label {
+  color: var(--model-5-text);
 }
 
 .final-text {

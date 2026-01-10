@@ -6,8 +6,34 @@
   border: 1px solid var(--border-color);
 }
 
+.stage-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  text-align: left;
+  transition: opacity 0.2s;
+  width: 100%;
+}
+
+.stage-header:hover {
+  opacity: 0.8;
+}
+
+.toggle-icon {
+  display: inline-block;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
 .stage-title {
-  margin: 0 0 16px 0;
+  margin: 0;
   color: var(--text-primary);
   font-size: 16px;
   font-weight: 600;
@@ -45,12 +71,98 @@
   font-weight: 600;
 }
 
+/* Model-specific tab colors */
+.tab.model-color-0 {
+  border-color: var(--model-0-border);
+}
+
+.tab.model-color-0.active {
+  color: var(--model-0-text);
+  border-color: var(--model-0-border);
+}
+
+.tab.model-color-1 {
+  border-color: var(--model-1-border);
+}
+
+.tab.model-color-1.active {
+  color: var(--model-1-text);
+  border-color: var(--model-1-border);
+}
+
+.tab.model-color-2 {
+  border-color: var(--model-2-border);
+}
+
+.tab.model-color-2.active {
+  color: var(--model-2-text);
+  border-color: var(--model-2-border);
+}
+
+.tab.model-color-3 {
+  border-color: var(--model-3-border);
+}
+
+.tab.model-color-3.active {
+  color: var(--model-3-text);
+  border-color: var(--model-3-border);
+}
+
+.tab.model-color-4 {
+  border-color: var(--model-4-border);
+}
+
+.tab.model-color-4.active {
+  color: var(--model-4-text);
+  border-color: var(--model-4-border);
+}
+
+.tab.model-color-5 {
+  border-color: var(--model-5-border);
+}
+
+.tab.model-color-5.active {
+  color: var(--model-5-text);
+  border-color: var(--model-5-border);
+}
+
 .tab-content {
   background: var(--bg-input);
   padding: 16px;
   border-radius: 6px;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
+}
+
+/* Model-specific content background colors */
+.tab-content.model-color-0 {
+  background: var(--model-0-bg);
+  border-color: var(--model-0-border);
+}
+
+.tab-content.model-color-1 {
+  background: var(--model-1-bg);
+  border-color: var(--model-1-border);
+}
+
+.tab-content.model-color-2 {
+  background: var(--model-2-bg);
+  border-color: var(--model-2-border);
+}
+
+.tab-content.model-color-3 {
+  background: var(--model-3-bg);
+  border-color: var(--model-3-border);
+}
+
+.tab-content.model-color-4 {
+  background: var(--model-4-bg);
+  border-color: var(--model-4-border);
+}
+
+.tab-content.model-color-5 {
+  background: var(--model-5-bg);
+  border-color: var(--model-5-border);
 }
 
 .model-name {

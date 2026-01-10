@@ -1,0 +1,176 @@
+.progress-bar-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--background-color);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.progress-stage-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.progress-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.stage-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: 3px solid;
+  background: var(--background-color);
+  position: relative;
+  z-index: 2;
+}
+
+.stage-circle.pending {
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.stage-circle.active {
+  border-color: #3b82f6;
+  color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.stage-circle.completed {
+  border-color: #10b981;
+  background: #10b981;
+  color: white;
+}
+
+.stage-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.progress-stage.active .stage-label {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.progress-stage.completed .stage-label {
+  color: #10b981;
+}
+
+.progress-connector {
+  flex: 1;
+  height: 3px;
+  background: var(--border-color);
+  position: relative;
+  margin: 0 -0.5rem;
+  margin-bottom: 2rem;
+  transition: background 0.3s ease;
+}
+
+.progress-connector.completed {
+  background: #10b981;
+}
+
+.checkmark {
+  width: 24px;
+  height: 24px;
+  animation: checkmark-appear 0.3s ease;
+}
+
+@keyframes checkmark-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.stage-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.stage-number {
+  font-size: 1.1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .progress-bar-container {
+    padding: 1rem;
+  }
+
+  .progress-bar {
+    gap: 0;
+  }
+
+  .stage-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .stage-label {
+    font-size: 0.75rem;
+    max-width: 80px;
+    white-space: normal;
+  }
+
+  .checkmark {
+    width: 20px;
+    height: 20px;
+  }
+
+  .stage-spinner {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stage-label {
+    display: none;
+  }
+
+  .progress-connector {
+    margin-bottom: 0;
+  }
+}

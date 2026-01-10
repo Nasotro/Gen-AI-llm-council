@@ -50,6 +50,37 @@
   border: 1px solid var(--border-user-msg);
 }
 
+/* Model-specific aggregate item colors */
+.aggregate-item.model-color-0 {
+  background: var(--model-0-bg);
+  border-color: var(--model-0-border);
+}
+
+.aggregate-item.model-color-1 {
+  background: var(--model-1-bg);
+  border-color: var(--model-1-border);
+}
+
+.aggregate-item.model-color-2 {
+  background: var(--model-2-bg);
+  border-color: var(--model-2-border);
+}
+
+.aggregate-item.model-color-3 {
+  background: var(--model-3-bg);
+  border-color: var(--model-3-border);
+}
+
+.aggregate-item.model-color-4 {
+  background: var(--model-4-bg);
+  border-color: var(--model-4-border);
+}
+
+.aggregate-item.model-color-5 {
+  background: var(--model-5-bg);
+  border-color: var(--model-5-border);
+}
+
 .rank-position {
   color: var(--color-text-blue);
   font-weight: 700;
@@ -103,6 +134,61 @@
   font-weight: 600;
 }
 
+/* Model-specific tab colors for Stage 2 */
+.stage2 .tab.model-color-0 {
+  border-color: var(--model-0-border);
+}
+
+.stage2 .tab.model-color-0.active {
+  color: var(--model-0-text);
+  border-color: var(--model-0-border);
+}
+
+.stage2 .tab.model-color-1 {
+  border-color: var(--model-1-border);
+}
+
+.stage2 .tab.model-color-1.active {
+  color: var(--model-1-text);
+  border-color: var(--model-1-border);
+}
+
+.stage2 .tab.model-color-2 {
+  border-color: var(--model-2-border);
+}
+
+.stage2 .tab.model-color-2.active {
+  color: var(--model-2-text);
+  border-color: var(--model-2-border);
+}
+
+.stage2 .tab.model-color-3 {
+  border-color: var(--model-3-border);
+}
+
+.stage2 .tab.model-color-3.active {
+  color: var(--model-3-text);
+  border-color: var(--model-3-border);
+}
+
+.stage2 .tab.model-color-4 {
+  border-color: var(--model-4-border);
+}
+
+.stage2 .tab.model-color-4.active {
+  color: var(--model-4-text);
+  border-color: var(--model-4-border);
+}
+
+.stage2 .tab.model-color-5 {
+  border-color: var(--model-5-border);
+}
+
+.stage2 .tab.model-color-5.active {
+  color: var(--model-5-text);
+  border-color: var(--model-5-border);
+}
+
 .stage2 .tab-content {
   background: var(--bg-input);
   padding: 16px;
@@ -110,6 +196,37 @@
   border: 1px solid var(--border-color);
   margin-bottom: 20px;
   color: var(--text-primary);
+}
+
+/* Model-specific content background colors for Stage 2 */
+.stage2 .tab-content.model-color-0 {
+  background: var(--model-0-bg);
+  border-color: var(--model-0-border);
+}
+
+.stage2 .tab-content.model-color-1 {
+  background: var(--model-1-bg);
+  border-color: var(--model-1-border);
+}
+
+.stage2 .tab-content.model-color-2 {
+  background: var(--model-2-bg);
+  border-color: var(--model-2-border);
+}
+
+.stage2 .tab-content.model-color-3 {
+  background: var(--model-3-bg);
+  border-color: var(--model-3-border);
+}
+
+.stage2 .tab-content.model-color-4 {
+  background: var(--model-4-bg);
+  border-color: var(--model-4-border);
+}
+
+.stage2 .tab-content.model-color-5 {
+  background: var(--model-5-bg);
+  border-color: var(--model-5-border);
 }
 
 .ranking-model {
