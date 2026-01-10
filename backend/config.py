@@ -53,7 +53,4 @@ COUNCIL_MODEL_NAMES = {
 # Chairman model - synthesizes final response
 CHAIRMAN_ENDPOINT = "http://localhost:8004/api/query"
 
-# Data directory for conversation storage
-DATA_DIR = "data/conversations"
-
 
