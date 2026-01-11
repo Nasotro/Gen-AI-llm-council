@@ -24,6 +24,8 @@ The three main stages are:
 
 The user has access to all of the intermediate outputs and can observe how the final answer is constructed.
 
+![LLM Council Workflow](img/LLM-council_chat.gif)
+
 ---
 
 ### System Architecture
@@ -132,7 +134,8 @@ uv run python -m backend.council_server_2
     
     - Workflow visualization:
 
-    ![LLM Council Workflow](img/LLM-council_chat.gif)
+    ![LLM Council Workflow](img/council_workflow_1.png)
+    ![LLM Council Workflow](img/council_workflow_2.png)
 
     - Improved tab view for responses:
 
@@ -143,6 +146,7 @@ uv run python -m backend.council_server_2
     - Model performance dashboard:
 
     ![Model performance dashboard](img/stats_dashboard.gif)
+    ![Model performance dashboard](img/dashboard.png)
 
 ---
 ### Generative AI Usage Statement
