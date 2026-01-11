@@ -58,6 +58,23 @@ The backend coordinates the full council workflow and the frontend visualizes ea
 - All machines connected to the same network
 - Firewall configured to allow communication on the required port (ex: 8002)
 
+#### Network and Firewall Configuration
+
+Since the LLM Council runs in a distributed configuration, all machines must be able to communicate with each other over the network.
+
+Each machine needs to allow **incoming connections** on the port used by the LLM servers (in this project, port **8002**, but it can be changed if needed).
+
+To do this, a new **firewall rule** needs to be created on each machine:
+- The rule must allow **inbound traffic**
+- The protocol should be **TCP**
+- The allowed port should match the server port (default: `8002`)
+- The rule should apply to the local network
+
+This configuration allows the main backend to send HTTP requests to the council member servers and receive their responses. Without this step, the machines will not be able to communicate correctly.
+
+All machines must also be connected to the same network (for example, a shared Wi-Fi network or a phone hotspot).
+
+
 ### Ollama Setup
 On each machine, install Ollama and pull the required models:
 ````
@@ -150,3 +167,8 @@ uv run python -m backend.council_server_2
 
 ---
 ### Generative AI Usage Statement
+- **Technical report**: ChatGPT was used to rephrase and improve the structure of some sections. All of the content and technical ideas were written by the team.
+
+- **Code**: Generative AI tools (ChatGPT, Mistral, and GitHub Copilot) were used to assist with frontend development and to better understand REST API communication and distributed architecture concepts.
+
+- **Documentation**: ChatGPT was used to help structure and write this README.md based on the technical report and project details.
