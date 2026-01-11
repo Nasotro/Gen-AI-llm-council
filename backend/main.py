@@ -130,6 +130,20 @@ async def get_statistics():
                             }
                         stats["model_stats"][model_name]["response_count"] += 1
                         stats["model_stats"][model_name]["total_response_length"] += len(response.get("response", ""))
+                
+                # Process stage3 (chairman model response)
+                stage3 = message.get("stage3")
+                if stage3:
+                    chairman_model_name = stage3.get("model")
+                    if chairman_model_name:
+                        if chairman_model_name not in stats["model_stats"]:
+                            stats["model_stats"][chairman_model_name] = {
+                                "name": chairman_model_name,
+                                "response_count": 0,
+                                "total_response_length": 0
+                            }
+                        stats["model_stats"][chairman_model_name]["response_count"] += 1
+                        stats["model_stats"][chairman_model_name]["total_response_length"] += len(stage3.get("response", ""))
     
     # Calculate averages
     for model_name, model_data in stats["model_stats"].items():
