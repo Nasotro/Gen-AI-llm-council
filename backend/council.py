@@ -3,8 +3,7 @@
 import time
 from typing import List, Dict, Any, Tuple
 from client import query_models_parallel, query_model
-from config import COUNCIL_MODELS, CHAIRMAN_ENDPOINT, COUNCIL_MODEL_NAMES
-from chairman_model_name import CHAIRMAN_MODEL_NAME
+from config import COUNCIL_MODELS, CHAIRMAN_ENDPOINT, COUNCIL_MODEL_NAMES, CHAIRMAN_MODEL_NAME
 
 
 async def stage1_collect_responses(user_query: str) -> Tuple[List[Dict[str, Any]], float]:
@@ -79,8 +78,8 @@ Here are the responses from different models (anonymized):
 {responses_text}
 
 Your task:
-1. First, evaluate each response individually. For each response, explain what it does well and what it does poorly.
-2. Then, at the very end of your response, provide a final ranking.
+1. First, evaluate the two models' responses individually. For each response, explain what it does well and what it does poorly.
+2. Then, at the very end of your response, provide a final ranking between the two models.
 
 IMPORTANT: Your final ranking MUST be formatted EXACTLY as follows:
 - DO NOT ANSWER the question again.
@@ -88,6 +87,7 @@ IMPORTANT: Your final ranking MUST be formatted EXACTLY as follows:
 - Then list the responses from best to worst as a numbered list
 - Each line should be: number, period, space, then ONLY the response label (e.g., "1. Response A")
 - Do not add any other text or explanations in the ranking section
+- There are only two responses to rank
 
 EXAMPLE of the correct format for your ENTIRE response:
 

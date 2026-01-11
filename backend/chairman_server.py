@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 import uvicorn
-from chairman_model_name import CHAIRMAN_MODEL_NAME
+
+CHAIRMAN_MODEL_NAME = "ministral-3:3b"
 
 print(CHAIRMAN_MODEL_NAME)
 
