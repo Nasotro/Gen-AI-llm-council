@@ -127,12 +127,15 @@ uv run python -m backend.council_server_2
 
 - Enhanced frontend with:
     - Light/Dark mode
-    
-    - Model performance dashboard
+        ![Light/Dark mode](img/light_dark.gif)
     
     - Workflow visualization
-    
+        ![LLM Council Workflow](img/LLM-council_chat.gif)
     - Improved tab view for responses
+        ![Tab view](img/tab_view_1.png)
+        ![Tab view](img/tab_view_2.png)
+    - Model performance dashboard
+        ![Model performance dashboard](img/stats_dashboard.gif)
 
 ---
 ### Generative AI Usage Statement
