@@ -152,7 +152,6 @@ export default function Statistics() {
                       backgroundColor: `hsl(${210 + (stageName === 'stage1' ? 0 : stageName === 'stage2' ? 30 : 60)}, 70%, 50%)`
                     }}
                   >
-                    <div className="timing-bar-fill"></div>
                   </div>
                 </div>
 
