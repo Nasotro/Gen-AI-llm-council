@@ -83,23 +83,22 @@ Your task:
 2. Then, at the very end of your response, provide a final ranking.
 
 IMPORTANT: Your final ranking MUST be formatted EXACTLY as follows:
+- DO NOT ANSWER the question again.
 - Start with the line "FINAL RANKING:" (all caps, with colon)
 - Then list the responses from best to worst as a numbered list
 - Each line should be: number, period, space, then ONLY the response label (e.g., "1. Response A")
 - Do not add any other text or explanations in the ranking section
 
-Example of the correct format for your ENTIRE response:
+EXAMPLE of the correct format for your ENTIRE response:
 
-Response A provides good detail on X but misses Y...
-Response B is accurate but lacks depth on Z...
-Response C offers the most comprehensive answer...
+Response A is good because <...> but lacks <...>.
+Response B is good because <...> but lacks <...>.
 
 FINAL RANKING:
-1. Response C
-2. Response A
-3. Response B
+1. Response .. (A or B)
+2. Response .. (B or A)
 
-Now provide your evaluation and ranking:"""
+Now provide your evaluation and ranking:""" 
     
 
     messages = [{"role": "user", "content": ranking_prompt}]
