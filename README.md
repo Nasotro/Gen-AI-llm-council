@@ -46,8 +46,8 @@ The backend coordinates the full council workflow and the frontend visualizes ea
 ---
 
 ### LLM Models Used
-- Council Member 1: Qwen2.5 (1.5B)
-- Council Member 2: Ministral-3 (3B)
+- Council Member 1: Gemma3 (1B)
+- Council Member 2: Gemma3 (4B)
 - Chairman: Ministral-3 (3B)
 
 ### Setup and Installation
