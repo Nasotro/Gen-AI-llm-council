@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 import uvicorn
 
-model_name = "gemma3:1b"
+model_name = "gemma3:4b"
 print(model_name)
 
 

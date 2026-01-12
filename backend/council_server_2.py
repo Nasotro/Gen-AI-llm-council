@@ -4,7 +4,7 @@ from langchain_ollama import ChatOllama
 import uvicorn
 import socket
 
-model_name = "qwen3:1.7b"
+model_name = "gemma3:4b"
 print(model_name)
 
 app = FastAPI()
@@ -39,5 +39,5 @@ def query(request: QueryRequest):
 
 if __name__ == "__main__":
     print(socket.gethostbyname(socket.gethostname()))
-    uvicorn.run(app, host="0.0.0.0", port=8003)
+    uvicorn.run(app, host="0.0.0.0", port=8002)
     

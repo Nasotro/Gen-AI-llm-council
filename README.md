@@ -46,8 +46,8 @@ The backend coordinates the full council workflow and the frontend visualizes ea
 ---
 
 ### LLM Models Used
-- Council Member 1: Qwen2.5 (1.5B)
-- Council Member 2: Ministral-3 (3B)
+- Council Member 1: Gemma3 (1B)
+- Council Member 2: Gemma3 (4B)
 - Chairman: Ministral-3 (3B)
 
 ### Setup and Installation
@@ -78,7 +78,8 @@ All machines must also be connected to the same network (for example, a shared W
 ### Ollama Setup
 On each machine, install Ollama and pull the required models:
 ````
-ollama pull qwen2.5:1.5b
+ollama pull gemma3:1b
+ollama pull gemma3:4b
 ollama pull ministral:3b
 ````
 --- 
