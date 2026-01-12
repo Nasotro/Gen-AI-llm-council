@@ -59,15 +59,11 @@ async def stage2_collect_rankings(
         for label, result in zip(labels, stage1_results)
     }
 
-    print("labels to models: ", label_to_model)
-
     # Build the ranking prompt
     responses_text = "\n\n".join([
         f"Response {label}:\n{result['response']}"
         for label, result in zip(labels, stage1_results)
     ])
-
-    print("response text, ranking prompt: ", responses_text)
 
     ranking_prompt = f"""You are evaluating different responses to the following question:
 
@@ -103,8 +99,6 @@ Now provide your evaluation and ranking:"""
 
     messages = [{"role": "user", "content": ranking_prompt}]
 
-    print("messages: ", messages)
-
     # Get rankings from all council models in parallel
     responses = await query_models_parallel(COUNCIL_MODELS, messages)
 
@@ -119,8 +113,6 @@ Now provide your evaluation and ranking:"""
                 "ranking": full_text,
                 "parsed_ranking": parsed
             })
-
-    print("stage 2 results: ", stage2_results)
 
     compute_time = time.time() - start_time
     return stage2_results, label_to_model, compute_time

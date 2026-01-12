@@ -23,7 +23,7 @@ def get_model_name(base_url):
         # La réponse contient {"status":"ok","model":"llama3.2:1b","type":"Council Member 1"}
         return data.get('model', 'unknown')
     except Exception as e:
-        print(f"⚠️  Erreur lors de la détection pour {info_url}: {e}")
+        print(f"Erreur lors de la détection pour {info_url}: {e}")
         return "unknown"
 
 # Construire les URLs
