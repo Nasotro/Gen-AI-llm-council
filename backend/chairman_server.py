@@ -2,7 +2,9 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 import uvicorn
-from chairman_model_name import CHAIRMAN_MODEL_NAME
+import socket
+
+CHAIRMAN_MODEL_NAME = "ministral-3:3b"
 
 print(CHAIRMAN_MODEL_NAME)
 
@@ -35,4 +37,5 @@ def query(request: QueryRequest):
         return None
 
 if __name__ == "__main__":
+    print(socket.gethostbyname(socket.gethostname()))
     uvicorn.run(app, host="0.0.0.0", port=8004)
